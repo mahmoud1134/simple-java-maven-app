@@ -2,7 +2,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]  # يشغل الـ Action عند كل push على الفرع main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,4 +21,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn -B clean verify
+        run: mvn -B package --file pom.xml
+
+      - name: Run Java Program
+        run: |
+          echo "Running Java program..."
+          java -cp target/classes Main
